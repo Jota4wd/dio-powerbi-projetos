@@ -1,0 +1,73 @@
+-- Criação do banco de dados se ainda não existir
+CREATE DATABASE IF NOT EXISTS mariadb_company;
+USE mariadb_company;
+
+-- Criação da tabela employee
+CREATE TABLE IF NOT EXISTS employee (
+    Fname VARCHAR(15) NOT NULL,
+    Minit CHAR(1),
+    Lname VARCHAR(15) NOT NULL,
+    Ssn CHAR(9) NOT NULL,
+    Bdate DATE,
+    Address VARCHAR(30),
+    Sex CHAR(1),
+    Salary DECIMAL(10,2),
+    Super_ssn CHAR(9),
+    Dno INT NOT NULL DEFAULT 1,
+    CONSTRAINT chk_salary_employee CHECK (Salary > 2000.0),
+    PRIMARY KEY (Ssn),
+    FOREIGN KEY (Super_ssn) REFERENCES employee(Ssn) ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+-- Criação da tabela departament
+CREATE TABLE IF NOT EXISTS departament (
+    Dname VARCHAR(15) NOT NULL,
+    Dnumber INT NOT NULL,
+    Mgr_ssn CHAR(9) NOT NULL,
+    Mgr_start_date DATE,
+    Dept_create_date DATE,
+    CONSTRAINT chk_date_dept CHECK (Dept_create_date < Mgr_start_date),
+    PRIMARY KEY (Dnumber),
+    UNIQUE (Dname),
+    FOREIGN KEY (Mgr_ssn) REFERENCES employee(Ssn) ON UPDATE CASCADE
+);
+
+-- Criação da tabela dept_locations
+CREATE TABLE IF NOT EXISTS dept_locations (
+    Dnumber INT NOT NULL,
+    Dlocation VARCHAR(15) NOT NULL,
+    PRIMARY KEY (Dnumber, Dlocation),
+    FOREIGN KEY (Dnumber) REFERENCES departament(Dnumber) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+-- Criação da tabela project
+CREATE TABLE IF NOT EXISTS project (
+    Pname VARCHAR(15) NOT NULL,
+    Pnumber INT NOT NULL,
+    Plocation VARCHAR(15),
+    Dnum INT NOT NULL,
+    PRIMARY KEY (Pnumber),
+    UNIQUE (Pname),
+    FOREIGN KEY (Dnum) REFERENCES departament(Dnumber)
+);
+
+-- Criação da tabela works_on
+CREATE TABLE IF NOT EXISTS works_on (
+    Essn CHAR(9) NOT NULL,
+    Pno INT NOT NULL,
+    Hours DECIMAL(3,1) NOT NULL,
+    PRIMARY KEY (Essn, Pno),
+    FOREIGN KEY (Essn) REFERENCES employee(Ssn),
+    FOREIGN KEY (Pno) REFERENCES project(Pnumber)
+);
+
+-- Criação da tabela dependent
+CREATE TABLE IF NOT EXISTS dependent (
+    Essn CHAR(9) NOT NULL,
+    Dependent_name VARCHAR(15) NOT NULL,
+    Sex CHAR(1),
+    Bdate DATE,
+    Relationship VARCHAR(8),
+    PRIMARY KEY (Essn, Dependent_name),
+    FOREIGN KEY (Essn) REFERENCES employee(Ssn)
+);

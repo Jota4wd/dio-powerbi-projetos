@@ -1,1 +1,23 @@
- 
+por falta de acesso ao azure, usei o mariadb
+
+ferramentas online
+https://clients.cloudclusters.io/
+phpmyadmin
+
+
+01 - usando libre office para exportar o xmls em um arquivo xml
+02 - usando o editor kate para exportar xml para csv
+03 - usando o libre office para formatar os dados csv
+04 - adaptando scripts para o maria db
+05 - usando o cliente myphpadmin para criar tabela e carregar os dados ao mariadb
+06 - prints de tabelas criadas e dados carregados (o banco eh gratuito por apenas 7 dias)
+07 - instalado drives e conectores para mariadb X power bi desktop
+08 - conectando power bi com maria db (usei ODBC generico localizado na rede)
+09 - tratando dados conforme o desafio
+10 - a diferenca de mesclagem realmente influencia a apresentacao dos dados
+11 - mais alguns prints pq o maria db tem apenas 7 dias free
+12 - espero ter printado tudo hu3
+
+
+
+
